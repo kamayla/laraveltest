@@ -39,7 +39,70 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
+        $this->mapCompanyRoutes();
+
+        $this->mapSeekerRoutes();
+
+        $this->mapAdminRoutes();
+
         //
+    }
+
+    /**
+     * Define the "admin" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapAdminRoutes()
+    {
+        Route::group([
+            'middleware' => ['web', 'admin', 'auth:admin'],
+            'prefix' => 'admin',
+            'as' => 'admin.',
+            'namespace' => $this->namespace,
+        ], function ($router) {
+            require base_path('routes/admin.php');
+        });
+    }
+
+    /**
+     * Define the "seeker" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapSeekerRoutes()
+    {
+        Route::group([
+            'middleware' => ['web', 'seeker', 'auth:seeker'],
+            'prefix' => 'seeker',
+            'as' => 'seeker.',
+            'namespace' => $this->namespace,
+        ], function ($router) {
+            require base_path('routes/seeker.php');
+        });
+    }
+
+    /**
+     * Define the "company" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapCompanyRoutes()
+    {
+        Route::group([
+            'middleware' => ['web', 'company', 'auth:company'],
+            'prefix' => 'company',
+            'as' => 'company.',
+            'namespace' => $this->namespace,
+        ], function ($router) {
+            require base_path('routes/company.php');
+        });
     }
 
     /**

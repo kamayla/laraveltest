@@ -4,7 +4,7 @@
 
 @section('content')
   <h1>
-    <a href="{{ url('/') }}" class="header-menu">Back</a>
+    <a href="{{ url('/posts') }}" class="header-menu">Back</a>
     New Post
   </h1>
   <form action="{{ url('/posts') }}" method="post">

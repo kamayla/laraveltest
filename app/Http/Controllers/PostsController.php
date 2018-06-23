@@ -6,13 +6,20 @@ use Illuminate\Http\Request;
 use App\Post;
 use App\Tag;
 use App\Http\Requests\PostRequest;
+use Auth;
+use App\Admin;
 
 class PostsController extends Controller
 {
+  public function __construct() {
+    $this->middleware('admin');
+  }
   public function index() {
     // $post = Post::all();
     // $post = Post::orderBy('created_at', 'desc')->get();
     $posts = Post::latest()->get(); // orderBy('created_at', 'desc')と同じ。
+    $user = Auth::guard('admin')->user();
+    dd($user);
     return view('posts.index')->with('posts',$posts);
   }
 
@@ -57,7 +64,7 @@ class PostsController extends Controller
     $post->body = $request->body;
     $post->save();
 
-    return redirect('/');
+    return redirect('/admin');
 
   }
 
